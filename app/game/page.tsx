@@ -35,8 +35,8 @@ export default function GameHub() {
         )
     }
 
-    const levelsCompleted = progress?.levels_completed || []
-    const totalStars = progress?.total_stars || 0
+    const levelsCompleted = progress?.levelsCompleted || []
+    const totalStars = progress?.totalStars || 0
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-500 via-purple-600 to-pink-500">
@@ -82,17 +82,17 @@ export default function GameHub() {
                                     }`}
                             >
                                 <div
-                                    className={`absolute inset-0 bg-gradient-to-br ${level.id === 1
-                                            ? 'from-orange-400 to-red-500'
-                                            : level.id === 2
-                                                ? 'from-blue-400 to-indigo-500'
-                                                : level.id === 3
-                                                    ? 'from-green-400 to-emerald-500'
-                                                    : 'from-yellow-400 to-orange-500'
+                                    className={`absolute inset-0 pointer-events-none bg-gradient-to-br ${level.id === 1
+                                        ? 'from-orange-400 to-red-500'
+                                        : level.id === 2
+                                            ? 'from-blue-400 to-indigo-500'
+                                            : level.id === 3
+                                                ? 'from-green-400 to-emerald-500'
+                                                : 'from-yellow-400 to-orange-500'
                                         } opacity-20`}
                                 />
 
-                                <CardHeader>
+                                <CardHeader className="relative z-10">
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <CardTitle className="text-2xl">Level {level.id}</CardTitle>
@@ -108,7 +108,7 @@ export default function GameHub() {
                                     </div>
                                 </CardHeader>
 
-                                <CardContent>
+                                <CardContent className="relative z-10">
                                     <p className="text-gray-600 mb-4">{level.description}</p>
 
                                     <div className="flex items-center justify-between">
@@ -127,7 +127,7 @@ export default function GameHub() {
                                         <Button
                                             onClick={() => isUnlocked && router.push(`/game/level/${level.id}`)}
                                             disabled={!isUnlocked}
-                                            className="bg-gradient-to-r from-green-400 to-blue-500 text-white"
+                                            className="bg-gradient-to-r from-green-400 to-blue-500 text-white relative z-20"
                                         >
                                             {isCompleted ? 'Play Again' : 'Start Level'}
                                         </Button>
@@ -153,7 +153,7 @@ export default function GameHub() {
                         Achievements
                     </Button>
                     <Button
-                        onClick={() => router.push('/dashboard/parent')}
+                        onClick={() => router.push('/parent')}
                         className="bg-white text-purple-600 hover:bg-purple-100"
                     >
                         Parent Dashboard

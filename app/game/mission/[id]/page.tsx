@@ -28,7 +28,7 @@ export default function MissionPage() {
         async function loadProgress() {
             const res = await getGameProgress()
             // Default unlocked aliens for new users if progress not found
-            const completed = res.data?.levels_completed || []
+            const completed = res.data?.levelsCompleted || []
             const unlocked = ['heatblast', 'four-arms']
             if (completed.includes(1)) unlocked.push('xlr8')
             if (completed.includes(2)) unlocked.push('grey-matter')
@@ -68,13 +68,13 @@ export default function MissionPage() {
 
         // Update progress
         const currentProgress = await getGameProgress()
-        const completedMissions = [...(currentProgress.data?.missions_completed || [])]
+        const completedMissions = [...(currentProgress.data?.missionsCompleted || [])]
         if (!completedMissions.includes(mission.id)) {
             completedMissions.push(mission.id)
         }
 
-        const totalStars = (currentProgress.data?.total_stars || 0) + result.stars
-        const levelsCompleted = [...(currentProgress.data?.levels_completed || [])]
+        const totalStars = (currentProgress.data?.totalStars || 0) + result.stars
+        const levelsCompleted = [...(currentProgress.data?.levelsCompleted || [])]
 
         // Check if all missions in this level are completed
         const levelMissions = getMissionById(mission.id)?.levelId

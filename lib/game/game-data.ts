@@ -58,7 +58,7 @@ export const VILLAINS: Villain[] = [
         id: 'lazytron',
         name: 'Lazytron',
         represents: 'Laziness',
-        weekAgainst: ['heatblast', 'four-arms'],
+        weakAgainst: ['heatblast', 'four-arms'],
         difficulty: 1,
     },
     {

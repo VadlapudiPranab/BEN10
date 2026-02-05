@@ -19,11 +19,21 @@ export async function getGameProgress() {
         .eq('user_id', user.id)
         .single()
 
-    if (error && error.code !== 'PGRST116') {
-        return { error: error.message }
+    if (data) {
+        return {
+            data: {
+                id: data.id,
+                userId: data.user_id,
+                currentLevel: data.current_level,
+                levelsCompleted: data.levels_completed,
+                missionsCompleted: data.missions_completed,
+                totalStars: data.total_stars,
+                totalPlaytime: data.total_playtime,
+            }
+        }
     }
 
-    return { data }
+    return { data: null }
 }
 
 export async function updateGameProgress(progress: {
@@ -46,7 +56,11 @@ export async function updateGameProgress(progress: {
         .from('game_progress')
         .upsert({
             user_id: user.id,
-            ...progress,
+            current_level: progress.currentLevel,
+            levels_completed: progress.levelsCompleted,
+            missions_completed: progress.missionsCompleted,
+            total_stars: progress.totalStars,
+            total_playtime: progress.totalPlaytime,
             updated_at: new Date().toISOString(),
         })
         .select()
@@ -152,7 +166,16 @@ export async function getAchievements() {
         return { error: error.message }
     }
 
-    return { data }
+    const mappedData = data?.map(a => ({
+        id: a.id,
+        userId: a.user_id,
+        achievementType: a.achievement_type,
+        achievementName: a.achievement_name,
+        achievementData: a.achievement_data,
+        earnedAt: a.earned_at
+    }))
+
+    return { data: mappedData }
 }
 
 export async function trackDailyHabit(habit: {
@@ -211,7 +234,16 @@ export async function getDailyHabits(date?: Date) {
         return { error: error.message }
     }
 
-    return { data }
+    const mappedData = data?.map(h => ({
+        id: h.id,
+        userId: h.user_id,
+        habitName: h.habit_name,
+        habitCategory: h.habit_category,
+        completed: h.completed,
+        completionDate: h.completion_date
+    }))
+
+    return { data: mappedData }
 }
 
 export async function getMissionScores(levelId?: number) {
@@ -240,7 +272,18 @@ export async function getMissionScores(levelId?: number) {
         return { error: error.message }
     }
 
-    return { data }
+    const mappedData = data?.map(s => ({
+        id: s.id,
+        userId: s.user_id,
+        levelId: s.level_id,
+        missionId: s.mission_id,
+        starsEarned: s.stars_earned,
+        timeTaken: s.time_taken,
+        perfectScore: s.perfect_score,
+        completedAt: s.completed_at
+    }))
+
+    return { data: mappedData }
 }
 
 export async function getParentSettings() {
