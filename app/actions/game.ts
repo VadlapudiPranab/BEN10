@@ -187,7 +187,7 @@ export async function trackDailyHabit(habit: {
     return { data }
 }
 
-export async function getD ailyHabits(date ?: Date) {
+export async function getDailyHabits(date?: Date) {
     const supabase = await createClient()
     const {
         data: { user },
